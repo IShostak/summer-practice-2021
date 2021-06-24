@@ -7,7 +7,6 @@ public class Controller {
     private Model model;
     private View view;
     public String text = "";
-    private StringBuilder result = new StringBuilder(text);
 
     public Controller(Model model, View view) {
         this.model = model;
@@ -25,7 +24,7 @@ public class Controller {
             text = scanner.nextLine();
         }
 
-        result.append(text + " ");
+        model.setTEXT(text + " ");
         text = scanner.nextLine();
 
         while (!model.isSecondValid(text)) {
@@ -33,7 +32,7 @@ public class Controller {
             text = scanner.nextLine();
         }
 
-        result.append(text);
-        view.printText(result.toString());
+        model.setTEXT(model.getTEXT() + text);
+        view.printText(model.getTEXT());
     }
 }
