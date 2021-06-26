@@ -16,15 +16,52 @@ public class Controller {
         Scanner scanner = new Scanner(System.in);
         model.generateNumber();
 
-        System.out.println(view.getGAME_START());
+        view.printGameStart();
 
         while (!model.isGameOver()) {
-            int number = returnNextInteger(scanner);
+            int number = returnValidInt(scanner);
 
-            if (model.isCorrectNumber(number)) {
+            String result = model.numberCheck(number);
 
+            switch (result) {
+                case "Win": {
+                    model.setGameOver(true);
+                    model.addAttempt(number);
+
+                    view.printStats(model.getAttempts());
+                    view.printWin();
+                    view.printEndGame();
+                    break;
+                }
+
+                case "Low": {
+                    model.addAttempt(number);
+
+                    view.printAttempts(model.getAttempts());
+                    view.printLowValue();
+                    break;
+                }
+
+                case "High" : {
+                    model.addAttempt(number);
+
+                    view.printAttempts(model.getAttempts());
+                    view.printHighValue();
+                    break;
+                }
             }
         }
+    }
+
+    public int returnValidInt(Scanner scanner) {
+        int number = returnNextInteger(scanner);
+
+        while (model.isOutOfBounds(number)) {
+            view.printOutOfBounds();
+            number = returnNextInteger(scanner);
+        }
+
+        return number;
     }
 
     public int returnNextInteger(Scanner scanner) {
@@ -43,12 +80,11 @@ public class Controller {
         try {
             Integer.parseInt(line);
         } catch (NumberFormatException e) {
-            System.out.println(view.getNUMBER_FORMAT_ERROR());
+            view.printNumberFormatError();
             return false;
         }
 
         return true;
     }
-
 
 }

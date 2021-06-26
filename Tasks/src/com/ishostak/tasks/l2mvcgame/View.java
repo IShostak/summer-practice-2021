@@ -5,18 +5,27 @@ import java.util.List;
 public class View {
 
     private final String GAME_START = "Starting game. \n" +
-            "If you want to exit. Enter \"Exit\" \n" +
+            "Number should be between 0 and 100.\n" +
             "You first guess:";
 
-    private final String LOW_VALUE = "To low. Your number should be between 0 and 100. Try something bigger";
-    private final String HIGH_VALUE = "To high. Your number should be between 0 and 100. Try something lower";
+    private final String LOW_VALUE = "To low. Try something bigger";
+    private final String HIGH_VALUE = "To high. Try something lower";
+    private final String OUT_OF_BOUNDS = "Should be between 0 and 100";
     private final String WIN = "Congratulations. You're winner!";
     private final String END_GAME = "Closing the game. See you soon";
     private final String NUMBER_FORMAT_ERROR = "Not a number. Please, enter number between 0 and 100:";
 
     public void printAttempts(List attempts) {
-        attempts.forEach(x -> System.out.print(x+ " "));
-        System.out.println();
+        StringBuilder result = new StringBuilder("");
+
+        for (int i = 0; i < attempts.size(); i++) {
+            result.append(attempts.get(i));
+            result.append(", ");
+        }
+
+        System.out.print("Your attempts: [");
+        System.out.print(result.substring(0,result.length() - 2));
+        System.out.println("]");
     }
 
     public void printStats(List attempts) {
@@ -26,27 +35,31 @@ public class View {
         printAttempts(attempts);
     }
 
-    public String getGAME_START() {
-        return GAME_START;
+    public void printOutOfBounds() {
+        System.out.println(OUT_OF_BOUNDS);
     }
 
-    public String getLOW_VALUE() {
-        return LOW_VALUE;
+    public void printGameStart() {
+        System.out.println(GAME_START);
     }
 
-    public String getHIGH_VALUE() {
-        return HIGH_VALUE;
+    public void printLowValue() {
+        System.out.println(LOW_VALUE);
     }
 
-    public String getWIN() {
-        return WIN;
+    public void printHighValue() {
+        System.out.println(HIGH_VALUE);
     }
 
-    public String getEND_GAME() {
-        return END_GAME;
+    public void printWin() {
+        System.out.println(WIN);
     }
 
-    public String getNUMBER_FORMAT_ERROR() {
-        return NUMBER_FORMAT_ERROR;
+    public void printEndGame() {
+        System.out.println(END_GAME);
+    }
+
+    public void printNumberFormatError() {
+        System.out.println(NUMBER_FORMAT_ERROR);
     }
 }
