@@ -6,20 +6,29 @@ import java.util.List;
 public class Model {
     private boolean gameOver;
     private int randomNumber;
-    private int bound = 100;
+    private int topBound = 100;
+    private int lowBound = 0;
+    private String boundariesMessage;
     private List attempts;
 
     public void generateNumber(){
-        randomNumber = (int)(Math.random() * bound);
+        randomNumber = (int)(Math.random() * topBound);
     }
 
     public boolean isOutOfBounds(int number) {
-        return number > bound || number < 0;
+        return number > topBound || number < lowBound;
     }
 
     public String numberCheck(int number) {
         if (randomNumber == number) return "Win";
-        if (number < randomNumber) return "Low";
+        if (number < randomNumber) {
+            if (number > lowBound) lowBound = number;
+
+            return "Low";
+        }
+
+        if (randomNumber < topBound) topBound = number;
+
         return "High";
     }
 
@@ -37,6 +46,31 @@ public class Model {
 
     public List getAttempts() {
         return attempts;
+    }
+
+    public int getTopBound() {
+        return topBound;
+    }
+
+    public void setTopBound(int topBound) {
+        this.topBound = topBound;
+    }
+
+    public int getLowBound() {
+        return lowBound;
+    }
+
+    public void setLowBound(int lowBound) {
+        this.lowBound = lowBound;
+    }
+
+    public String getBoundariesMessage() {
+        boundariesMessage = "Between " + lowBound + " and " + topBound;
+        return boundariesMessage;
+    }
+
+    public void setBoundariesMessage(String boundariesMessage) {
+        this.boundariesMessage = boundariesMessage;
     }
 
     public void addAttempt(int number) {

@@ -39,6 +39,7 @@ public class Controller {
 
                     view.printAttempts(model.getAttempts());
                     view.printLowValue();
+                    view.printBoundaries(model.getBoundariesMessage());
                     break;
                 }
 
@@ -47,6 +48,7 @@ public class Controller {
 
                     view.printAttempts(model.getAttempts());
                     view.printHighValue();
+                    view.printBoundaries(model.getBoundariesMessage());
                     break;
                 }
             }

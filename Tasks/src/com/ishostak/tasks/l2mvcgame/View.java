@@ -15,17 +15,13 @@ public class View {
     private final String END_GAME = "Closing the game. See you soon";
     private final String NUMBER_FORMAT_ERROR = "Not a number. Please, enter number between 0 and 100:";
 
+    public void printBoundaries(String boundaries) {
+        System.out.println(boundaries);
+    }
+
     public void printAttempts(List attempts) {
-        StringBuilder result = new StringBuilder("");
-
-        for (int i = 0; i < attempts.size(); i++) {
-            result.append(attempts.get(i));
-            result.append(", ");
-        }
-
-        System.out.print("Your attempts: [");
-        System.out.print(result.substring(0,result.length() - 2));
-        System.out.println("]");
+        System.out.print("Your attempts: ");
+        System.out.println(attempts);
     }
 
     public void printStats(List attempts) {
