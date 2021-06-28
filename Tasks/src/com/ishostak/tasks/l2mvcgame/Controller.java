@@ -68,13 +68,12 @@ public class Controller {
 
     public int returnNextInteger(Scanner scanner) {
         String line = scanner.nextLine();
-        int number;
 
         while (!isInteger(line)) {
             line = scanner.nextLine();
         }
 
-       return number = Integer.parseInt(line);
+       return Integer.parseInt(line);
     }
 
     public boolean isInteger(String line) {
@@ -88,5 +87,4 @@ public class Controller {
 
         return true;
     }
-
 }

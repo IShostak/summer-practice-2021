@@ -12,7 +12,7 @@ public class Model {
     private List attempts;
 
     public void generateNumber(){
-        randomNumber = (int)(Math.random() * topBound);
+        randomNumber = (int)(Math.random() * (topBound+1));
     }
 
     public boolean isOutOfBounds(int number) {
@@ -21,9 +21,9 @@ public class Model {
 
     public String numberCheck(int number) {
         if (randomNumber == number) return "Win";
+
         if (number < randomNumber) {
             if (number > lowBound) lowBound = number;
-
             return "Low";
         }
 
@@ -40,37 +40,13 @@ public class Model {
         this.gameOver = gameOver;
     }
 
-    public int getRandomNumber() {
-        return randomNumber;
-    }
-
     public List getAttempts() {
         return attempts;
-    }
-
-    public int getTopBound() {
-        return topBound;
-    }
-
-    public void setTopBound(int topBound) {
-        this.topBound = topBound;
-    }
-
-    public int getLowBound() {
-        return lowBound;
-    }
-
-    public void setLowBound(int lowBound) {
-        this.lowBound = lowBound;
     }
 
     public String getBoundariesMessage() {
         boundariesMessage = "Between " + lowBound + " and " + topBound;
         return boundariesMessage;
-    }
-
-    public void setBoundariesMessage(String boundariesMessage) {
-        this.boundariesMessage = boundariesMessage;
     }
 
     public void addAttempt(int number) {
@@ -80,5 +56,4 @@ public class Model {
 
         attempts.add(number);
     }
-
 }
