@@ -1,4 +1,7 @@
 /Tasks/out/
 /shelf/
 /workspace.xml
+*.iml
 .*/
+/Tasks/*.iml
+../.gitignore
