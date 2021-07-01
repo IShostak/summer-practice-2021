@@ -1,4 +1,4 @@
-package com.ishostak.tasks.l1mvchelloworld;
+package com.ishostak.tasks.lec1mvchelloworld;
 
 import java.util.Scanner;
 

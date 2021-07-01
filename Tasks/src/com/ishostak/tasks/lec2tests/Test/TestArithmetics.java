@@ -1,6 +1,6 @@
-package com.ishostak.tasks.l2tests.Test;
+package com.ishostak.tasks.lec2tests.Test;
 
-import com.ishostak.tasks.l2tests.Calculation.Arithmetics;
+import com.ishostak.tasks.lec2tests.Calculation.Arithmetics;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;

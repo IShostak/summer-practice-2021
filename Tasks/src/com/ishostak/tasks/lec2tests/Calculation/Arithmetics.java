@@ -1,4 +1,4 @@
-package com.ishostak.tasks.l2tests.Calculation;
+package com.ishostak.tasks.lec2tests.Calculation;
 
 public class Arithmetics {
 

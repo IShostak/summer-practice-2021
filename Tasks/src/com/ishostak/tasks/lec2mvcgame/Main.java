@@ -1,4 +1,4 @@
-package com.ishostak.tasks.l2mvcgame;
+package com.ishostak.tasks.lec2mvcgame;
 
 public class Main {
     public static void main(String[] args) {
