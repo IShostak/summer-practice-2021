@@ -12,7 +12,7 @@ public class Model {
     private List attempts;
 
     public void generateNumber(){
-        randomNumber = (int)(Math.random() * (topBound+1));
+        randomNumber = (int)(Math.random() * topBound);
     }
 
     public boolean isOutOfBounds(int number) {
@@ -30,6 +30,18 @@ public class Model {
         if (randomNumber < topBound) topBound = number;
 
         return "High";
+    }
+
+    public int getRandomNumber() {
+        return randomNumber;
+    }
+
+    public int getTopBound() {
+        return topBound;
+    }
+
+    public int getLowBound() {
+        return lowBound;
     }
 
     public boolean isGameOver() {
