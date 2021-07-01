@@ -34,6 +34,7 @@ public class Test {
 
     @org.junit.Test
     public void checkWin() {
+        String result;
         int winningNumber = -1;
 
         for (int i = 0; i < 100; i++ ) {
@@ -42,11 +43,14 @@ public class Test {
                 break;
             }
         }
-        Assert.assertEquals(number, winningNumber);
+
+        result = model.numberCheck(winningNumber);
+        Assert.assertEquals("Win",result);
     }
 
     @org.junit.Test
-    public void checkLose() {
+    public void checkHigh() {
+        String result;
         int winningNumber = -1;
 
         for (int i = 0; i < 100; i++ ) {
@@ -55,6 +59,24 @@ public class Test {
                 break;
             }
         }
-        Assert.assertFalse(number != winningNumber);
+
+        result = model.numberCheck(winningNumber + 1);
+        Assert.assertEquals("High", result);
+    }
+
+    @org.junit.Test
+    public void checkLow() {
+        String result;
+        int winningNumber = -1;
+
+        for (int i = 0; i < 100; i++ ) {
+            if (i == number) {
+                winningNumber = number;
+                break;
+            }
+        }
+
+        result = model.numberCheck(winningNumber - 1);
+        Assert.assertEquals("Low", result);
     }
 }
