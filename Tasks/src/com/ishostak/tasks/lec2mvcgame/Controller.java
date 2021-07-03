@@ -55,7 +55,7 @@ public class Controller {
         }
     }
 
-    public int returnValidInt(Scanner scanner) {
+    private int returnValidInt(Scanner scanner) {
         int number = returnNextInteger(scanner);
 
         while (model.isOutOfBounds(number)) {
@@ -66,7 +66,7 @@ public class Controller {
         return number;
     }
 
-    public int returnNextInteger(Scanner scanner) {
+    private int returnNextInteger(Scanner scanner) {
         String line = scanner.nextLine();
 
         while (!isInteger(line)) {
@@ -76,7 +76,7 @@ public class Controller {
        return Integer.parseInt(line);
     }
 
-    public boolean isInteger(String line) {
+    private boolean isInteger(String line) {
 
         try {
             Integer.parseInt(line);

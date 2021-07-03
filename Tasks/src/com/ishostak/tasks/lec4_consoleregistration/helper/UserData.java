@@ -1,4 +1,4 @@
-package com.ishostak.tasks.lec4_consoleregistration.Helper;
+package com.ishostak.tasks.lec4_consoleregistration.helper;
 
 public class UserData {
 
@@ -13,7 +13,7 @@ public class UserData {
 
     }
 
-    public class Builder {
+    public static class Builder {
         private UserData newUserData;
 
         public Builder() {
@@ -77,5 +77,17 @@ public class UserData {
 
     public String getNickName() {
         return nickName;
+    }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

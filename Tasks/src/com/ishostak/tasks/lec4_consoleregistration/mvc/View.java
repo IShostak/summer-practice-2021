@@ -1,6 +1,6 @@
 package com.ishostak.tasks.lec4_consoleregistration.mvc;
 
-import com.ishostak.tasks.lec4_consoleregistration.Helper.Message;
+import com.ishostak.tasks.lec4_consoleregistration.helper.Message;
 
 public class View {
 
@@ -14,6 +14,10 @@ public class View {
 
     public void printMessage(Message message) {
         System.out.println(message.getMessage());
+    }
+
+    public void printText(String text) {
+        System.out.println(text);
     }
 
 }
