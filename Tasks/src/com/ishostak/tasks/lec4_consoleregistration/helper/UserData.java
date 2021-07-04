@@ -81,13 +81,8 @@ public class UserData {
 
     @Override
     public String toString() {
-        return "UserData{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
+        return lastName + " " + firstName.substring(0,1) + ".\n"
+                + surname + " " + phoneNumber +  "\n"
+                + email + " " + nickName;
     }
 }

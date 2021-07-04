@@ -33,9 +33,9 @@ public class Controller {
 
         firstName = requestData(Message.REQUEST_FIRST_NAME, DataValidator.FIRST_NAME_PATTERN);
         lastName = requestData(Message.REQUEST_LAST_NAME, DataValidator.LAST_NAME_PATTERN);
+        surname = requestData(Message.REQUEST_SURNAME, DataValidator.SURNAME_PATTERN);
         email = requestData(Message.REQUEST_EMAIL, DataValidator.EMAIL_PATTERN);
         nickName = requestData(Message.REQUEST_NICKNAME, DataValidator.NICKNAME_PATTERN);
-        surname = requestData(Message.REQUEST_SURNAME, DataValidator.SURNAME_PATTERN);
         phoneNumber = requestData(Message.REQUEST_PHONE_NUMBER, DataValidator.PHONE_NUMBER_PATTERN);
 
         temp = new UserData.Builder()
