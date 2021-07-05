@@ -19,7 +19,7 @@ public class Controller {
     }
 
     public void startRegistration() {
-        UserData temp;
+        UserData newUser;
 
         String firstName;
         String lastName;
@@ -38,7 +38,7 @@ public class Controller {
         nickName = requestData(Message.REQUEST_NICKNAME, DataValidator.NICKNAME_PATTERN);
         phoneNumber = requestData(Message.REQUEST_PHONE_NUMBER, DataValidator.PHONE_NUMBER_PATTERN);
 
-        temp = new UserData.Builder()
+        newUser = new UserData.Builder()
                 .withFirstName(firstName)
                 .withLastName(lastName)
                 .withEmail(email)
@@ -47,10 +47,10 @@ public class Controller {
                 .withPhoneNumber(phoneNumber)
                 .build();
 
-        model.add(temp);
+        model.add(newUser);
 
         view.printMessage(Message.REGISTRATION_COMPLETE);
-        view.printText(temp.toString());
+        view.printText(newUser.toString());
     }
 
     private String requestData(Message message, String pattern) {
