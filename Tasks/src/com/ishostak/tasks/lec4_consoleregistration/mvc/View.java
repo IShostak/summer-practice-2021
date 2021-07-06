@@ -12,10 +12,6 @@ public class View {
     private final String REQUEST_PHONE_NUMBER = "Enter phone number: ";
     private final String INVALID_DATA = "Invalid data. Please, try again";
 
-    public void printMessage(Message message) {
-        System.out.println(message.getMessage());
-    }
-
     public void printText(String text) {
         System.out.println(text);
     }

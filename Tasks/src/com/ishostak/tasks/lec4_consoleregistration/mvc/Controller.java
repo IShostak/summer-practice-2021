@@ -4,13 +4,21 @@ import com.ishostak.tasks.lec4_consoleregistration.helper.DataValidator;
 import com.ishostak.tasks.lec4_consoleregistration.helper.Message;
 import com.ishostak.tasks.lec4_consoleregistration.helper.UserData;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Controller {
 
+    private final String RESOURCE_BASE_PATH = "com/ishostak/tasks/lec4_consoleregistration/";
+    private final String RESOURCE_BASE_NAME =  RESOURCE_BASE_PATH + "text";
+    private final String PATTERN_BASE_NAME = RESOURCE_BASE_PATH + "pattern";
+
     private Model model;
     private View view;
     private Scanner scanner;
+    private ResourceBundle bundle;
+    private ResourceBundle patternBundle;
 
     public Controller(Model model, View view) {
         this.model = model;
@@ -29,7 +37,9 @@ public class Controller {
         String surname;
         String phoneNumber;
 
-        view.printMessage(Message.START);
+        chooseLang();
+
+        view.printText(bundle.getString(Message.START.name()));
 
         firstName = requestData(Message.REQUEST_FIRST_NAME, DataValidator.FIRST_NAME_PATTERN);
         lastName = requestData(Message.REQUEST_LAST_NAME, DataValidator.LAST_NAME_PATTERN);
@@ -49,20 +59,39 @@ public class Controller {
 
         model.add(newUser);
 
-        view.printMessage(Message.REGISTRATION_COMPLETE);
+        view.printText(bundle.getString(Message.REGISTRATION_COMPLETE.name()));
         view.printText(newUser.toString());
     }
 
-    private String requestData(Message message, String pattern) {
-        view.printMessage(message);
-        return getValidData(pattern);
+    private void chooseLang() {
+        view.printText("Choose language: \"en\" or \"ua\":");
+
+        String lang = scanner.nextLine();
+
+        while ( !(lang.equals("en") || lang.equals("ua"))) {
+            view.printText("Invalid data. Try again");
+            lang = scanner.nextLine();
+        }
+
+        bundle = ResourceBundle.getBundle(
+                RESOURCE_BASE_NAME + "_" + lang,
+                new Locale(lang, lang.toUpperCase()));
+
+        patternBundle = ResourceBundle.getBundle(
+                PATTERN_BASE_NAME + "_" + lang);
     }
 
-    private String getValidData(String pattern) {
+    private String requestData(Message message, String patternName) {
+        view.printText(bundle.getString(message.name()));
+        return getValidData(patternName);
+    }
+
+    private String getValidData(String patternName) {
         String result = scanner.nextLine();
+        String pattern = patternBundle.getString(patternName);
 
         while (!DataValidator.isValid(result, pattern)) {
-            view.printMessage(Message.INVALID_DATA);
+            view.printText(bundle.getString(Message.INVALID_DATA.name()));
             result = scanner.nextLine();
         }
 
