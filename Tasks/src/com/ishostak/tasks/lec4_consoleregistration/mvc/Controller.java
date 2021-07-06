@@ -2,6 +2,7 @@ package com.ishostak.tasks.lec4_consoleregistration.mvc;
 
 import com.ishostak.tasks.lec4_consoleregistration.helper.DataValidator;
 import com.ishostak.tasks.lec4_consoleregistration.helper.Message;
+import com.ishostak.tasks.lec4_consoleregistration.helper.PatternName;
 import com.ishostak.tasks.lec4_consoleregistration.helper.UserData;
 
 import java.util.Locale;
@@ -41,12 +42,12 @@ public class Controller {
 
         view.printText(bundle.getString(Message.START.name()));
 
-        firstName = requestData(Message.REQUEST_FIRST_NAME, DataValidator.FIRST_NAME_PATTERN);
-        lastName = requestData(Message.REQUEST_LAST_NAME, DataValidator.LAST_NAME_PATTERN);
-        surname = requestData(Message.REQUEST_SURNAME, DataValidator.SURNAME_PATTERN);
-        email = requestData(Message.REQUEST_EMAIL, DataValidator.EMAIL_PATTERN);
-        nickName = requestData(Message.REQUEST_NICKNAME, DataValidator.NICKNAME_PATTERN);
-        phoneNumber = requestData(Message.REQUEST_PHONE_NUMBER, DataValidator.PHONE_NUMBER_PATTERN);
+        firstName = requestData(Message.REQUEST_FIRST_NAME, PatternName.FIRST_NAME_PATTERN);
+        lastName = requestData(Message.REQUEST_LAST_NAME, PatternName.LAST_NAME_PATTERN);
+        surname = requestData(Message.REQUEST_SURNAME, PatternName.SURNAME_PATTERN);
+        email = requestData(Message.REQUEST_EMAIL, PatternName.EMAIL_PATTERN);
+        nickName = requestData(Message.REQUEST_NICKNAME, PatternName.NICKNAME_PATTERN);
+        phoneNumber = requestData(Message.REQUEST_PHONE_NUMBER, PatternName.PHONE_NUMBER_PATTERN);
 
         newUser = new UserData.Builder()
                 .withFirstName(firstName)
@@ -81,9 +82,9 @@ public class Controller {
                 PATTERN_BASE_NAME + "_" + lang);
     }
 
-    private String requestData(Message message, String patternName) {
+    private String requestData(Message message, PatternName patternName) {
         view.printText(bundle.getString(message.name()));
-        return getValidData(patternName);
+        return getValidData(patternName.name());
     }
 
     private String getValidData(String patternName) {
