@@ -1,9 +1,6 @@
 package com.ishostak.tasks.lec4_consoleregistration.mvc;
 
-import com.ishostak.tasks.lec4_consoleregistration.helper.DataValidator;
-import com.ishostak.tasks.lec4_consoleregistration.helper.Message;
-import com.ishostak.tasks.lec4_consoleregistration.helper.PatternName;
-import com.ishostak.tasks.lec4_consoleregistration.helper.UserData;
+import com.ishostak.tasks.lec4_consoleregistration.helper.*;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -46,7 +43,8 @@ public class Controller {
         lastName = requestData(Message.REQUEST_LAST_NAME, PatternName.LAST_NAME_PATTERN);
         surname = requestData(Message.REQUEST_SURNAME, PatternName.SURNAME_PATTERN);
         email = requestData(Message.REQUEST_EMAIL, PatternName.EMAIL_PATTERN);
-        nickName = requestData(Message.REQUEST_NICKNAME, PatternName.NICKNAME_PATTERN);
+        nickName = requestValidNickname();
+
         phoneNumber = requestData(Message.REQUEST_PHONE_NUMBER, PatternName.PHONE_NUMBER_PATTERN);
 
         newUser = new UserData.Builder()
@@ -80,6 +78,22 @@ public class Controller {
 
         patternBundle = ResourceBundle.getBundle(
                 PATTERN_BASE_NAME + "_" + lang);
+    }
+
+    private String requestValidNickname() {
+        String nickname;
+        nickname = requestData(Message.REQUEST_NICKNAME.REQUEST_NICKNAME, PatternName.NICKNAME_PATTERN);
+
+        while (model.isValidNickname(nickname)) {
+            try {
+                throw new UserAlreadyExistException("Try another nickname");
+            } catch (UserAlreadyExistException e) {
+                view.printText(e.toString());
+                nickname = requestData(Message.REQUEST_NICKNAME, PatternName.NICKNAME_PATTERN);
+            }
+        }
+
+        return nickname;
     }
 
     private String requestData(Message message, PatternName patternName) {
