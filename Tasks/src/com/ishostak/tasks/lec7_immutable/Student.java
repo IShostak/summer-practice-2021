@@ -32,16 +32,19 @@ public class Student {
         return clonedInfo;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (this == null) return false;
+        if (o == null) return false;
 
         if ( !(o instanceof Student)) return false;
 
         Student st = (Student)o;
         return  st.age == this.age & st.group.equals(this.group) & st.name.equals(this.name);
     }
+
+
 
     @Override
     public int hashCode() {
