@@ -1,9 +1,9 @@
-package com.ishostak.tasks.lec4_consoleregistration;
+package com.ishostak.tasks.lec4to6_consoleregistration;
 
-import com.ishostak.tasks.lec4_consoleregistration.helper.UserData;
-import com.ishostak.tasks.lec4_consoleregistration.mvc.Controller;
-import com.ishostak.tasks.lec4_consoleregistration.mvc.Model;
-import com.ishostak.tasks.lec4_consoleregistration.mvc.View;
+import com.ishostak.tasks.lec4to6_consoleregistration.helper.UserData;
+import com.ishostak.tasks.lec4to6_consoleregistration.mvc.Controller;
+import com.ishostak.tasks.lec4to6_consoleregistration.mvc.Model;
+import com.ishostak.tasks.lec4to6_consoleregistration.mvc.View;
 
 public class Main {
 

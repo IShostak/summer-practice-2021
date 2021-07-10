@@ -1,7 +1,6 @@
-package com.ishostak.tasks.lec4_consoleregistration.mvc;
+package com.ishostak.tasks.lec4to6_consoleregistration.mvc;
 
-import com.ishostak.tasks.lec4_consoleregistration.helper.UserAlreadyExistException;
-import com.ishostak.tasks.lec4_consoleregistration.helper.UserData;
+import com.ishostak.tasks.lec4to6_consoleregistration.helper.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Model {
         users.add(newUser);
     }
 
-    public boolean isValidNickname(String nickname) {
+    public boolean isInvalidNickname(String nickname) {
         if (users != null) {
             for (UserData data : users) {
                 if (data.getNickName().equals(nickname)) return true;

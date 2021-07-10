@@ -1,6 +1,6 @@
-package com.ishostak.tasks.lec4_consoleregistration.mvc;
+package com.ishostak.tasks.lec4to6_consoleregistration.mvc;
 
-import com.ishostak.tasks.lec4_consoleregistration.helper.*;
+import com.ishostak.tasks.lec4to6_consoleregistration.helper.*;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Controller {
 
-    private final String RESOURCE_BASE_PATH = "com/ishostak/tasks/lec4_consoleregistration/";
+    private final String RESOURCE_BASE_PATH = "com/ishostak/tasks/lec4to6_consoleregistration/";
     private final String RESOURCE_BASE_NAME =  RESOURCE_BASE_PATH + "text";
     private final String PATTERN_BASE_NAME = RESOURCE_BASE_PATH + "pattern";
 
@@ -84,7 +84,7 @@ public class Controller {
         String nickname;
         nickname = requestData(Message.REQUEST_NICKNAME.REQUEST_NICKNAME, PatternName.NICKNAME_PATTERN);
 
-        while (model.isValidNickname(nickname)) {
+        while (model.isInvalidNickname(nickname)) {
             try {
                 throw new UserAlreadyExistException("Try another nickname");
             } catch (UserAlreadyExistException e) {

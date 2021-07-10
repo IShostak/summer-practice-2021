@@ -1,4 +1,4 @@
-package com.ishostak.tasks.lec4_consoleregistration.helper;
+package com.ishostak.tasks.lec4to6_consoleregistration.helper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
