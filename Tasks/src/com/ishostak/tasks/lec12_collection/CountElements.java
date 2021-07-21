@@ -1,9 +1,8 @@
 package com.ishostak.tasks.lec12_collection;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CountElements {
     /*Есть ArrayList<Integer> - ов. За один проход подсчитать количество повторений каждого элемента.
@@ -29,11 +28,12 @@ public class CountElements {
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(4,5,-6,4,5,3,4,2,4,5,7);
 
-        Map<Integer, Integer> unique = countUnique(list);
+        Map<Integer, Integer> unique = countUniqueStreamToMap(list);
 
         for (Map.Entry<Integer, Integer> entry : unique.entrySet()) {
             System.out.println(entry);
         }
+
     }
 
     public static Map<Integer, Integer> countUnique(List<Integer> integers) {
@@ -45,5 +45,21 @@ public class CountElements {
         }
 
         return result;
+    }
+
+    public static Map<Integer, Long> countUniqueStream(List<Integer> integers) {
+        return integers.stream()
+                .collect(Collectors.groupingBy(Function.identity() , Collectors.counting()));
+    }
+
+
+    public static Map<Integer, Integer> getNumbersCount(List<Integer> numbers) {
+        return numbers.stream()
+                .collect(Collectors.toMap(Function.identity(), num -> 1, (x, y) -> x + 1, HashMap::new));
+    }
+
+    public static Map<Integer, Integer> countUniqueStreamToMap(List<Integer> integers) {
+        return integers.stream()
+                .collect(Collectors.toMap(Function.identity(), value -> 1, (x,y) -> y + 1));
     }
 }
