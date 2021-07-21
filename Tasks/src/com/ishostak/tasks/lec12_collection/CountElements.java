@@ -40,10 +40,10 @@ public class CountElements {
         Map<Integer, Integer> result = new HashMap<>();
 
         for (Integer integer : integers) {
-            if (result.containsKey(integer)) {
-                result.put(integer, result.get(integer) + 1);
-            } else result.put(integer, 1);
+            result.computeIfPresent(integer, (x,y) -> y += 1);
+            result.putIfAbsent(integer, 1);
         }
+
         return result;
     }
 }
