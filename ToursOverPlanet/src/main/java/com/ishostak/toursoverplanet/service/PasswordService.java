@@ -43,5 +43,4 @@ public class PasswordService {
             throw new PasswordServiceException("Error while inserting password into db");
         }
     }
-
 }

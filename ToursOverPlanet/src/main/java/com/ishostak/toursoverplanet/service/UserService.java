@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -41,15 +42,29 @@ public class UserService {
             throw new UserServiceException("User already exists");
         }
 
-        final User actualUser = userRepository.save(new User(dto.getFullName(), dto.getEmail()));
+        final User actualUser = userRepository.saveAndFlush(new User(dto.getFullName(), dto.getEmail()));
 
         try {
-            final Password password = passwordService.create(actualUser.getEmail(), passwordEncoder.encode(dto.getPassword()));
+            passwordService.create(actualUser.getEmail(), passwordEncoder.encode(dto.getPassword()));
         } catch (PasswordServiceException ex) {
             logger.error("Error while register user", ex);
             throw new UserServiceException("Error creating user");
         }
 
         return actualUser;
+    }
+
+    @Transactional
+    public Optional<User> readByEmail(String email) {
+        logger.info("Read user from db email = {}", email);
+
+        final Optional<User> userFromDb = userRepository.findByEmail(email);
+
+        if (! userFromDb.isPresent()) {
+            logger.error("No user with this email {}", email);
+            throw new NoSuchElementException("No such user");
+        }
+
+        return userFromDb;
     }
 }
