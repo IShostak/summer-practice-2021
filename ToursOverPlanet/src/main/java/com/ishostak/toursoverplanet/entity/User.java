@@ -50,4 +50,8 @@ public class User {
         this.fullName = fullName;
         this.email = email;
     }
+
+    public long getUserId() {
+        return userId;
+    }
 }

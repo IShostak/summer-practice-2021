@@ -20,20 +20,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.cors().and().csrf().disable()
 //                .authorizeRequests()
 //                .anyRequest().permitAll();
-        http.cors().and().csrf().disable()
+
+        http
                 .authorizeRequests()
-                .antMatchers("/static","/register", "/login").permitAll()
-                .anyRequest().authenticated();
-
-
-//
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .successForwardUrl("/profile")
-//                .and()
-//                .logout().logoutUrl("/logout")
-//                .logoutSuccessUrl("/index")
-//                .permitAll()
-//                .invalidateHttpSession(true);
+                .antMatchers("/","/static","/registration", "/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .successForwardUrl("/profile")
+                .and()
+                .logout()
+                .permitAll()
+                .and()
+                .logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/index")
+                .permitAll()
+                .invalidateHttpSession(true);
     }
 }

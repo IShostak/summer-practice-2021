@@ -1,7 +1,6 @@
 package com.ishostak.toursoverplanet.service;
 
 import com.ishostak.toursoverplanet.dto.RegistrationDto;
-import com.ishostak.toursoverplanet.entity.Password;
 import com.ishostak.toursoverplanet.entity.User;
 import com.ishostak.toursoverplanet.exception.PasswordServiceException;
 import com.ishostak.toursoverplanet.exception.UserServiceException;
@@ -11,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -54,7 +55,7 @@ public class UserService {
         return actualUser;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<User> readByEmail(String email) {
         logger.info("Read user from db email = {}", email);
 
@@ -66,5 +67,14 @@ public class UserService {
         }
 
         return userFromDb;
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> readAll() {
+        logger.info("Read all users from db email");
+
+        final List<User> usersFromDb = userRepository.findAll();
+
+        return usersFromDb;
     }
 }

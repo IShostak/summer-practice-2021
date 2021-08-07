@@ -11,5 +11,5 @@ public enum TourType {
 
     Shopping,
 
-    excursion
+    Excursion
 }
