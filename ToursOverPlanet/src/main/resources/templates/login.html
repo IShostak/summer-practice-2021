@@ -14,7 +14,6 @@
   <div class="row">
     <div class="col-md-8 mx-auto">
       <h2 th:text="#{login}"></h2>
-
       <form th:action="@{/login}" th:object="${dto}" method="post">
         <div class="form-row">
             <div class="col-md-6 form-group">
@@ -28,12 +27,9 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block mt-3" th:text="#{btn.submit}"></button>
       </form>
-
-
       <form>
         <button formaction="/" class="btn btn-primary btn-block mt-3" th:text="#{btn.to.main}"></button>
       </form>
-
     </div>
   </div>
 </div>

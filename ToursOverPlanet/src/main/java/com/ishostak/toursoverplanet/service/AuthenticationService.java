@@ -1,19 +1,20 @@
 package com.ishostak.toursoverplanet.service;
 
 import com.ishostak.toursoverplanet.entity.User;
+import com.ishostak.toursoverplanet.entity.enums.Role;
+import com.ishostak.toursoverplanet.exception.AuthenticationServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthenticationService {
@@ -30,38 +31,45 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void authenticateUser(String email, String password) {
+    public void authenticateUser(String email, String password) throws AuthenticationServiceException {
         logger.info("Set authentication: {}", email);
 
-        validateUser(email, password);
+        Set<Role> roles = validateUserAndGetRoles(email, password);
 
-        setAuthentication(email);
+        setAuthentication(email, roles);
     }
 
-    private void validateUser(String email, String password) {
+    private Set<Role> validateUserAndGetRoles(String email, String password) throws AuthenticationServiceException {
 
-        final Optional<User> user = userService.readByEmail(email);
+        logger.info("Authorization attempt for user: {}", email);
 
-        if (user.isPresent()) {
-            String passwordFromDb = user.get().getPassword().getPayload();
+        final User user = userService.readByEmail(email).
+                orElseThrow(()->
+                        new NoSuchElementException("No such user"));
+
+        if (user.isBlocked()) throw new AuthenticationServiceException(
+                "User is blocked. Contact admin for further details");
+
+            String passwordFromDb = user.getPassword().getPayload();
+
             logger.debug("User found: {}", email);
 
-            boolean isValid = passwordEncoder.matches(password, passwordFromDb);
-
-            if (isValid) {
+            if (passwordEncoder.matches(password, passwordFromDb)) {
                 logger.debug("Password is valid for user {}", email);
+                return user.getRoles();
             } else {
                 logger.error("Invalid credentials: {}", email);
                 throw new NoSuchElementException("Invalid email or password");
             }
-        } else {
-            logger.error("No such user: {}", email);
-            throw new NoSuchElementException("No such user");
-        }
     }
 
-    private void setAuthentication(String email) {
-        Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
+    private void setAuthentication(String email , Set<Role> roles) {
+
+        Collection<GrantedAuthority> authorities = roles.stream()
+                .map(x-> new SimpleGrantedAuthority(x.name()))
+                .collect(Collectors.toSet());
+
+        logger.debug("User authorities : {}", authorities);
 
         final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 email, null, authorities);

@@ -14,7 +14,8 @@ import javax.validation.constraints.Size;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class RegistrationDto {
+@Builder
+public class UserUpdateDto {
 
     @NotNull
     @NotEmpty
@@ -27,11 +28,12 @@ public class RegistrationDto {
     @ValidEmail
     private String email;
 
-    @NotNull
-    @NotEmpty
-    @Size(min = 6, max = 32)
-    @ValidPassword
-    private String password;
-
     private boolean isManager;
+
+    private boolean isAdmin;
+
+    private boolean isBlocked;
+
+    private long id;
+
 }

@@ -2,6 +2,7 @@ package com.ishostak.toursoverplanet.service;
 
 import com.ishostak.toursoverplanet.dto.RegistrationDto;
 import com.ishostak.toursoverplanet.entity.User;
+import com.ishostak.toursoverplanet.entity.enums.Role;
 import com.ishostak.toursoverplanet.exception.PasswordServiceException;
 import com.ishostak.toursoverplanet.exception.UserServiceException;
 import com.ishostak.toursoverplanet.repository.UserRepository;
@@ -13,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -36,14 +35,30 @@ public class UserService {
     public User create(RegistrationDto dto) throws UserServiceException {
         logger.info("User registration: email = {}", dto.getEmail());
 
-        final Optional<User> userFromDb = userRepository.findByEmail(dto.getEmail());
-
-        if (userFromDb.isPresent()) {
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             logger.error("User already exists in DB: email = {}", dto.getEmail());
             throw new UserServiceException("User already exists");
         }
 
-        final User actualUser = userRepository.saveAndFlush(new User(dto.getFullName(), dto.getEmail()));
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.USER);
+
+        /**
+         * for creating admin
+         */
+        if (dto.getFullName().equals("admin")) {
+            roles.add(Role.ADMIN);
+            roles.add(Role.MANAGER);
+        }
+
+        if (dto.isManager()) {
+            logger.info("this user is manager {}", dto.getEmail());
+            roles.add(Role.MANAGER);
+        }
+
+        final User actualUser = userRepository.saveAndFlush(new User(dto.getFullName(), dto.getEmail(), roles));
+
+//        final User actualUser = userRepository.saveAndFlush(new User(dto.getFullName(), dto.getEmail(), Role.USER));
 
         try {
             passwordService.create(actualUser.getEmail(), passwordEncoder.encode(dto.getPassword()));
@@ -55,7 +70,6 @@ public class UserService {
         return actualUser;
     }
 
-    @Transactional(readOnly = true)
     public Optional<User> readByEmail(String email) {
         logger.info("Read user from db email = {}", email);
 
@@ -69,12 +83,44 @@ public class UserService {
         return userFromDb;
     }
 
-    @Transactional(readOnly = true)
     public List<User> readAll() {
-        logger.info("Read all users from db email");
+        logger.info("Reading all users from db");
 
         final List<User> usersFromDb = userRepository.findAll();
 
         return usersFromDb;
+    }
+
+
+    public void deleteById(long id) {
+        logger.info("Deleting user with id {} from db", id);
+        userRepository.deleteById(id);
+    }
+
+    public Optional<User> readById(long theId) {
+        logger.info("Read user from db id = {}", theId);
+
+        final Optional<User> userFromDb = userRepository.findUserByUserId(theId);
+
+        if (! userFromDb.isPresent()) {
+            logger.error("No user with this id {}", theId);
+            throw new NoSuchElementException("No such user");
+        }
+
+        return userFromDb;
+    }
+
+    public User updateUser(User newUser) {
+
+        User userFromDb = userRepository.findById(newUser.getUserId())
+                .orElseThrow(()->new NoSuchElementException("No such user"));
+
+        userFromDb.setPassword(newUser.getPassword());
+        userFromDb.setFullName(newUser.getFullName());
+        userFromDb.setEmail(newUser.getEmail());
+        userFromDb.setRoles(newUser.getRoles());
+        userFromDb.setBlocked(newUser.isBlocked());
+
+        return userRepository.saveAndFlush(userFromDb);
     }
 }

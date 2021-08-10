@@ -1,5 +1,6 @@
 package com.ishostak.toursoverplanet.config;
 
+import com.ishostak.toursoverplanet.entity.enums.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,25 +18,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().permitAll();
-
-        http
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/static","/registration", "/login").permitAll()
+                .antMatchers("/users/**").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/", "/registration", "/login", "/fragments/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .successForwardUrl("/profile")
+                .exceptionHandling().accessDeniedPage("/forbidden")
                 .and()
-                .logout()
-                .permitAll()
-                .and()
-                .logout().logoutUrl("/logout")
-                .logoutSuccessUrl("/index")
+//                .formLogin().loginPage("/login").permitAll()
+//                .successForwardUrl("/profile");
+//                .and()
+                .logout().logoutUrl("/logout").permitAll()
+                .logoutSuccessUrl("/")
                 .permitAll()
                 .invalidateHttpSession(true);
     }

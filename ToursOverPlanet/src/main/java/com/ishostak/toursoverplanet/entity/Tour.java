@@ -1,5 +1,6 @@
 package com.ishostak.toursoverplanet.entity;
 
+import com.ishostak.toursoverplanet.entity.enums.TourType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 @ToString
+@Builder
 public class Tour {
 
     @Id
@@ -35,12 +37,19 @@ public class Tour {
     private boolean isHot;
 
     @NotNull
-    private boolean isFull;
+    private boolean isFull = false;
 
     @NotNull
     private long capacity;
 
+    private TourType type;
+
     @NotNull
     @ManyToMany
+    @ToString.Exclude
     private List<User> tourists;
+
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Order orders;
 }

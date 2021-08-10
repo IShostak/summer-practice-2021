@@ -20,7 +20,7 @@
   <h3>User Directory</h3>
   <hr>
 
-  <a th:href ="@{/employees/showFormAdd}"
+  <a th:href ="@{/users/showFormAdd}"
      class="btn btn-primary btn-sm mb-3">
     Add User
   </a>
@@ -40,6 +40,8 @@
       <th>Full Name</th>
       <th>Email</th>
       <th>ID</th>
+      <th>Roles</th>
+      <th>Is Blocked</th>
       <th>Action</th>
     </tr>
     </thead>
@@ -49,12 +51,14 @@
       <td th:text = "${user.fullName}" />
       <td th:text = "${user.email}" />
       <td th:text = "${user.userId}" />
+      <td th:text="${user.roles}" />
+      <td th:text="${user.blocked}" />
 
       <td>
-        <a th:href = "@{/employees/showFormUpdate(employeeId=${user.userId})}"
+        <a th:href = "@{/users/showFormForUpdate(userId=${user.userId})}"
            class="btn btn-info btn-sm">Update</a>
 
-        <a th:href = "@{/employees/delete(employeeId=${user.userId})}"
+        <a th:href = "@{/users/delete/(userId=${user.userId})}"
            class="btn btn-danger btn-sm"
            onclick="if (!(confirm('Are you sure?'))) return false">
           Delete</a>

@@ -1,6 +1,6 @@
 package com.ishostak.toursoverplanet.entity.enums;
 
-public enum TourStatus {
+public enum OrderStatus {
     Registered,
     Paid,
     Canceled

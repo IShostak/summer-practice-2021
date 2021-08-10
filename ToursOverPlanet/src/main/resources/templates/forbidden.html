@@ -5,23 +5,17 @@
     <title th:text="#{title}"> </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </div>
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
 <body>
 
-
-<header th:insert="fragments/header2 :: header"> </header>
-
-
-<p class="fs-1 text-lg-center" th:text="#{text.welcome}"></p>
+<p class="fs-1 text-lg-center" th:text="#{text.forbidden}"></p>
 <div class="container mx-auto">
     <div class="row mx-auto">
         <div class="col-md-8 mx-auto">
-            <a class="btn btn-primary" href="/registration" role="button" th:text="#{registration}"></a>
+            <a class="btn btn-primary" href="/" role="button" th:text="#{btn.to.main}"></a>
             <a class="btn btn-primary" href="/login" role="button" th:text="#{login}" ></a>
         </div>
     </div>
@@ -41,7 +35,7 @@
         $("#locales").change(function () {
             var selectedOption = $('#locales').val();
             if (selectedOption != ''){
-                window.location.replace('?lang=' + selectedOption);
+                window.location.replace('international?lang=' + selectedOption);
             }
         });
     });

@@ -29,6 +29,12 @@
           <input type="password" class="form-control" th:field="*{password}" id="floatingPassword" placeholder="Password">
           <label for="floatingPassword" th:text="#{label.password}" ></label>
         </div>
+
+        <div class="form-floating mb-3">
+          <label for="floatingCheckbox"  >Is Manager</label>
+          <input type="checkbox" th:field="*{manager}" th:value="*{manager}" id="floatingCheckbox">
+        </div>
+
         <button type="submit" class="btn btn-primary btn-block mt-3" th:text="#{btn.submit}"></button>
       </form>
   </div>
